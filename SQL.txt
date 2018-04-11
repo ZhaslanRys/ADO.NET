@@ -1,0 +1,25 @@
+create table Person
+(
+id_person int not null identity primary key,
+name_person varchar(200) not null,
+login_person varchar(200) not null unique,
+password_person varchar(200) not null
+)
+go
+create table Files
+(
+id_file int not null identity primary key,
+id_person int not null foreign key references Person(id_person),
+name_file varchar(200) not null,
+content_file varchar(200) not null,
+data_file varbinary(200) not null
+)
+go
+create table Cloud
+(
+id_cloud int not null identity primary key,
+id_person int not null foreign key references Person(id_person),
+id_file int not null foreign key references Files(id_file),
+creationDate date not null,
+check (creationDate > '01-01-1900' and creationDate < getdate())
+)
